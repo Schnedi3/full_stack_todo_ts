@@ -32,7 +32,7 @@ export const Login = () => {
       <form
         className={styles.form}
         onSubmit={handleSubmit(onSubmit)}
-        autoComplete="off"
+        // autoComplete="off"
       >
         <article className={styles.header}>
           <h2 className={styles.title}>Enter your account</h2>

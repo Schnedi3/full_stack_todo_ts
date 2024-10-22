@@ -13,7 +13,7 @@ export const addTask = async (req: Request, res: Response) => {
   const userId = req.user.id;
 
   try {
-    const result = await addTaskDB(text, userId);
+    const result = await addTaskDB(text, userId)
 
     res.status(200).json({ success: true, message: "Task added", result });
   } catch (error: any) {
