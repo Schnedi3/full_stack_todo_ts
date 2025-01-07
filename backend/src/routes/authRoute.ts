@@ -1,23 +1,9 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import {
-  loginGoogle,
-  loginUser,
-  registerUser,
-  logout,
-  resetPassword,
-  tokenController,
-} from "../controllers/authController";
-import { validateSchema } from "../middleware/validateAuth";
-import { userSchema } from "../schemas/schema";
+import { saveUser } from '../controllers/authController';
 
 const router = Router();
 
-router.post("/google", loginGoogle);
-router.post("/login", validateSchema(userSchema), loginUser);
-router.post("/register", validateSchema(userSchema), registerUser);
-router.post("/logout", logout);
-router.put("/reset-password", validateSchema(userSchema), resetPassword);
-router.post("/refresh-token", tokenController);
+router.post('/login', saveUser);
 
 export default router;

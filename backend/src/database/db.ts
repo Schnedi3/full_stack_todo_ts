@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import { Pool } from 'pg';
 
 import {
   PG_DATABASE,
@@ -6,12 +6,12 @@ import {
   PG_PASSWORD,
   PG_PORT,
   PG_USER,
-} from "../config/config";
+} from '../config/config';
 
 export const pool = new Pool({
   database: PG_DATABASE,
   host: PG_HOST,
   password: PG_PASSWORD,
-  port: PG_PORT as unknown as number,
+  port: Number(PG_PORT),
   user: PG_USER,
 });
