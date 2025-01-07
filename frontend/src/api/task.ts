@@ -1,14 +1,12 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
-import customAxios from "./axios";
-import { toast } from "react-toastify";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+// import { toast } from 'react-toastify';
 
 export const useTask = () => {
   return useQuery({
-    queryKey: ["tasks"],
+    queryKey: ['tasks'],
     queryFn: async () => {
-      const { data } = await customAxios.get("/task");
-      return data.result;
+      const response = await fetch('/task', { method: 'GET' });
+      return response.json();
     },
   });
 };
@@ -18,11 +16,10 @@ export const useAddTask = () => {
 
   return useMutation({
     mutationFn: (text: string) => {
-      return customAxios.post("/task", { text });
+      return fetch('/task', { method: 'POST', body: JSON.stringify({ text }) });
     },
-    onSuccess: ({ data }) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["addresses"] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['addresses'] });
     },
   });
 };
@@ -32,11 +29,14 @@ export const useCompleteTask = () => {
 
   return useMutation({
     mutationFn: ({ completed, id }: { completed: boolean; id: number }) => {
-      return customAxios.put(`/task/complete/${id}`, { completed });
+      return fetch(`/task/complete/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completed }),
+      });
     },
-    onSuccess: ({ data }) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 };
@@ -46,11 +46,14 @@ export const useUpdateTask = () => {
 
   return useMutation({
     mutationFn: ({ updatedText, id }: { updatedText: string; id: number }) => {
-      return customAxios.put(`/task/update/${id}`, { updatedText });
+      return fetch(`/task/update/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ updatedText }),
+      });
     },
-    onSuccess: ({ data }) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 };
@@ -60,11 +63,10 @@ export const useDeleteTask = () => {
 
   return useMutation({
     mutationFn: (id: number) => {
-      return customAxios.delete(`/task/${id}`);
+      return fetch(`/task/${id}`, { method: 'DELETE' });
     },
-    onSuccess: ({ data }) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 };
