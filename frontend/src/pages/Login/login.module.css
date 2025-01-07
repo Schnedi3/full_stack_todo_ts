@@ -1,0 +1,58 @@
+/* AUTH */
+.auth {
+  width: 45%;
+  max-width: 1000px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  top: 11rem;
+}
+
+.title {
+  font-family: Raleway;
+  font-weight: 900;
+  font-size: 2.3rem;
+  color: var(--white-text);
+}
+
+/* GBUTTON */
+.gbutton {
+  width: 100%;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  border-radius: 0.3rem;
+  background-color: var(--google-bg);
+}
+
+.iconGoogle {
+  width: 1.4rem;
+}
+
+.gbuttonText {
+  color: var(--google-text);
+}
+
+/* HOVER */
+@media (hover: hover) {
+  .authButton:hover,
+  .gbutton:hover {
+    cursor: pointer;
+  }
+}
+
+/* ADAPTIVE */
+@media (max-width: 1000px) {
+  .auth {
+    width: 60%;
+  }
+}
+
+@media (max-width: 650px) {
+  .auth {
+    width: 90%;
+  }
+}

@@ -60,7 +60,7 @@ ul {
 body {
   font: 0.9rem Poppins;
   background-color: var(--bg);
-  animation: fade-In 1s;
+  animation: fade-In 2s;
 }
 
 /* HEADER IMAGE */
@@ -87,10 +87,8 @@ body {
 @keyframes fade-In {
   0% {
     opacity: 0;
-    transform: scale(1.2);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
   }
 }
