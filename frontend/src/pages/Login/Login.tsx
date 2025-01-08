@@ -3,15 +3,18 @@ import { signInWithPopup } from 'firebase/auth';
 import { iconGoogle } from '../../Routes';
 import { auth, googleProvider } from '../../firebase/firebase';
 import { useAuthStore } from '../../store/authStore';
+import { useSaveUser } from '../../api/user';
 import styles from './login.module.css';
 
 export default function Login() {
   const { setIsAuthenticated } = useAuthStore();
+  const { mutate: saveUser } = useSaveUser();
 
   const googleLogin = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const { user } = await signInWithPopup(auth, googleProvider);
       setIsAuthenticated(true);
+      saveUser({ id: user.uid, fullName: user.displayName, email: user.email });
     } catch (error) {
       console.log(error);
     }
