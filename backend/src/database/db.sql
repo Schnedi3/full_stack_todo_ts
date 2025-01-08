@@ -9,7 +9,6 @@ CREATE TABLE task (
 
 CREATE TABLE users (
   id VARCHAR(50) PRIMARY KEY,
-  fist_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50),
-  email VARCHAR(150) NOT NULL UNIQUE
+  full_name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE
 );

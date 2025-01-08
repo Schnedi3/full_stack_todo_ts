@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import { saveUserDB } from '../database/authDB';
+import { saveUserDB } from '../database/userDB';
 
 export const saveUser = async (req: Request, res: Response) => {
-  const { id, firstName, lastName, email } = req.body;
+  const { id, fullName, email } = req.body;
 
   try {
-    await saveUserDB(id, firstName, lastName, email);
+    await saveUserDB(id, fullName, email);
 
     res.status(200).json({ message: 'User saved succesfully' });
   } catch (error: any) {
