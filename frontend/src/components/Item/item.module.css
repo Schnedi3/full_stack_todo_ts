@@ -59,6 +59,7 @@
 }
 
 .edit {
+  width: 100%;
   font-family: Poppins;
   font-size: 1.1rem;
   color: var(--main-text);

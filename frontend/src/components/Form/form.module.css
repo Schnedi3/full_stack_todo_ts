@@ -33,18 +33,13 @@
 }
 
 .iconClear {
-  display: block;
-}
-
-.span {
-  display: none;
   font-size: 1.2rem;
   color: var(--gray-text);
 }
 
 /* HOVER */
 @media (hover: hover) {
-  .span:hover {
+  .iconClear:hover {
     color: var(--accent);
     cursor: pointer;
   }

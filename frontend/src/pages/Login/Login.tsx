@@ -7,13 +7,14 @@ import { useSaveUser } from '../../api/user';
 import styles from './login.module.css';
 
 export default function Login() {
-  const { setIsAuthenticated } = useAuthStore();
+  const { setIsAuthenticated, setUserId } = useAuthStore();
   const { mutate: saveUser } = useSaveUser();
 
   const googleLogin = async () => {
     try {
       const { user } = await signInWithPopup(auth, googleProvider);
       setIsAuthenticated(true);
+      setUserId(user.uid);
       saveUser({ id: user.uid, fullName: user.displayName, email: user.email });
     } catch (error) {
       console.log(error);

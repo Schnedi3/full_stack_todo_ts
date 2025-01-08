@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useAddTask } from "../../api/task";
-import styles from "./form.module.css";
+import { useAddTask } from '../../api/task';
+import styles from './form.module.css';
 
 export const Form = () => {
-  const [newTask, setNewTask] = useState<string>("");
+  const [task, setTask] = useState<string>('');
   const { mutate: addTask } = useAddTask();
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (newTask) {
-      addTask(newTask);
+    if (task) {
+      addTask(task);
     }
+
+    setTask('');
   };
 
   return (
@@ -21,18 +23,17 @@ export const Form = () => {
       <article className={styles.inputContainer}>
         <input
           className={styles.input}
-          type="text"
-          placeholder="Add a new task..."
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          autoFocus
+          type='text'
+          placeholder='Add a new task...'
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
         />
-        <span
-          className={`${styles.span} ${newTask ? styles.iconClear : ""}`}
-          onClick={() => setNewTask("")}
-        >
-          ✖
-        </span>
+
+        {task && (
+          <span className={styles.iconClear} onClick={() => setTask('')}>
+            ✖
+          </span>
+        )}
       </article>
     </form>
   );

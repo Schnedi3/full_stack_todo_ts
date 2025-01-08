@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useCompleteTask, useDeleteTask, useUpdateTask } from "../../api/task";
-import { ITask } from "../../types/types";
-import { iconTrash } from "../../Routes";
-import styles from "./item.module.css";
+import { useCompleteTask, useDeleteTask, useUpdateTask } from '../../api/task';
+import { ITask } from '../../types/types';
+import { iconTrash } from '../../Routes';
+import styles from './item.module.css';
 
 interface IItemProps {
   filteredList: ITask[];
@@ -12,7 +12,7 @@ interface IItemProps {
 export const Item = ({ filteredList }: IItemProps) => {
   const [editId, setEditId] = useState<number>(0);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [updatedText, setUpdatedText] = useState<string>("");
+  const [updatedTask, setUpdatedTask] = useState<string>('');
 
   const { mutate: updateTask } = useUpdateTask();
   const { mutate: completeTask } = useCompleteTask();
@@ -29,9 +29,9 @@ export const Item = ({ filteredList }: IItemProps) => {
   ) => {
     e.preventDefault();
 
-    if (updatedText.trim() !== "") {
+    if (updatedTask.trim() !== '') {
       updateTask(
-        { updatedText, id },
+        { updatedTask, id },
         {
           onSuccess: () => {
             setEditMode(false);
@@ -51,41 +51,41 @@ export const Item = ({ filteredList }: IItemProps) => {
 
   return (
     <ul>
-      {filteredList.map((task) => (
-        <li className={styles.tasks} key={task.id}>
+      {filteredList.map((todo) => (
+        <li className={styles.tasks} key={todo.id}>
           <input
             className={`${styles.checkbox} ${styles.checkboxBorder}`}
-            type="checkbox"
-            id={task.text}
-            checked={task.completed}
-            onChange={() => handleCompleteTask(task.completed, task.id)}
+            type='checkbox'
+            id={todo.task}
+            checked={todo.completed}
+            onChange={() => handleCompleteTask(todo.completed, todo.id)}
           />
-          {editMode && editId === task.id ? (
-            <form onSubmit={(e) => handleUpdateTask(e, task.id)}>
+          {editMode && editId === todo.id ? (
+            <form onSubmit={(e) => handleUpdateTask(e, todo.id)}>
               <input
                 className={styles.edit}
-                type="text"
-                value={updatedText}
-                onChange={(e) => setUpdatedText(e.target.value)}
+                type='text'
+                value={updatedTask}
+                onChange={(e) => setUpdatedTask(e.target.value)}
                 autoFocus
               />
             </form>
           ) : (
             <p
               className={`${styles.taskText} ${
-                task.completed ? styles.taskCompleted : ""
+                todo.completed ? styles.taskCompleted : ''
               }`}
               onDoubleClick={() => {
                 setEditMode(true),
-                  setEditId(task.id),
-                  setUpdatedText(task.text);
+                  setEditId(todo.id),
+                  setUpdatedTask(todo.task);
               }}
             >
-              {task.text}
+              {todo.task}
             </p>
           )}
-          <button className={styles.button} onClick={() => deleteTask(task.id)}>
-            <img className={styles.icon} src={iconTrash} alt="delete task" />
+          <button className={styles.button} onClick={() => deleteTask(todo.id)}>
+            <img className={styles.icon} src={iconTrash} alt='delete task' />
           </button>
         </li>
       ))}

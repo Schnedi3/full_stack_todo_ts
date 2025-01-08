@@ -1,25 +1,40 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-// import { toast } from 'react-toastify';
+import { useAuthStore } from '../store/authStore';
+import { toast } from 'react-toastify';
 
-export const useTask = () => {
+import { baseURL } from './baseURL';
+
+export const useGetTasks = () => {
+  const { userId } = useAuthStore();
+
   return useQuery({
-    queryKey: ['tasks'],
+    queryKey: ['tasks', userId],
     queryFn: async () => {
-      const response = await fetch('/task', { method: 'GET' });
+      const response = await fetch(`${baseURL}/task`, {
+        method: 'GET',
+        headers: { userId },
+      });
       return response.json();
     },
+    initialData: [],
   });
 };
 
 export const useAddTask = () => {
   const queryClient = useQueryClient();
+  const { userId } = useAuthStore();
 
   return useMutation({
-    mutationFn: (text: string) => {
-      return fetch('/task', { method: 'POST', body: JSON.stringify({ text }) });
+    mutationFn: (task: string) => {
+      return fetch(`${baseURL}/task`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task, userId }),
+      });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['addresses'] });
+      toast.success('Task added');
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 };
@@ -29,13 +44,14 @@ export const useCompleteTask = () => {
 
   return useMutation({
     mutationFn: ({ completed, id }: { completed: boolean; id: number }) => {
-      return fetch(`/task/complete/${id}`, {
+      return fetch(`${baseURL}/task/complete/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed }),
       });
     },
     onSuccess: () => {
+      toast.success('Task completed');
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
@@ -45,14 +61,15 @@ export const useUpdateTask = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ updatedText, id }: { updatedText: string; id: number }) => {
-      return fetch(`/task/update/${id}`, {
+    mutationFn: ({ updatedTask, id }: { updatedTask: string; id: number }) => {
+      return fetch(`${baseURL}/task/update/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ updatedText }),
+        body: JSON.stringify({ updatedTask }),
       });
     },
     onSuccess: () => {
+      toast.success('Task updated');
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
@@ -63,9 +80,10 @@ export const useDeleteTask = () => {
 
   return useMutation({
     mutationFn: (id: number) => {
-      return fetch(`/task/${id}`, { method: 'DELETE' });
+      return fetch(`${baseURL}/task/${id}`, { method: 'DELETE' });
     },
     onSuccess: () => {
+      toast.success('Task deleted');
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
