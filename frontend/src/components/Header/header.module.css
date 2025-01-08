@@ -1,13 +1,15 @@
 .header {
+  width: 100%;
+  position: absolute;
+  top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 /* THEME */
 .theme {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -25,9 +27,7 @@
 
 /* LOGOUT */
 .logout {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
+  position: relative;
   padding: 0.5rem 2rem;
   font-family: Poppins;
   font-weight: 500;

@@ -1,33 +1,39 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Outlet,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Header, Login, Todo } from './Routes';
+import { useAuthStore } from './store/authStore';
 import './app.css';
 
-// const ProtectedRoute = () => {
-//   if () {
-//     return <Login />;
-//   }
+const ProtectedRoute = () => {
+  const { isAuthenticated } = useAuthStore();
 
-//   return <Outlet />;
-// };
+  if (!isAuthenticated) {
+    return <Navigate to='/login' replace />;
+  }
 
-const router = createBrowserRouter([
-  {
-    path: '/login',
-    element: <Login />,
-    index: true,
-  },
-  {
-    // element: <ProtectedRoute />,
-    children: [{ path: '/', element: <Todo /> }],
-  },
-  {
-    path: '*',
-    element: <p>404 Error - Nothing here...</p>,
-  },
-]);
+  return <Outlet />;
+};
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path='/login' element={<Login />} />
+
+      <Route path='/' element={<ProtectedRoute />}>
+        <Route index element={<Todo />} />
+      </Route>
+    </>
+  )
+);
 
 export const App = () => {
   return (

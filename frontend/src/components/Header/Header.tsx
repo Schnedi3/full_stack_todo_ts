@@ -1,13 +1,23 @@
+import { signOut } from 'firebase/auth';
+
 import { useTheme } from '../../hooks/useTheme';
 import { iconTheme } from '../../Routes';
 import styles from './header.module.css';
 import './themes.css';
+import { auth } from '../../firebase/firebase';
+import { useAuthStore } from '../../store/authStore';
 
 export const Header = () => {
   const { theme, setTheme } = useTheme();
+  const { isAuthenticated, setIsAuthenticated } = useAuthStore();
 
   const toggleTheme = () => {
     setTheme(theme === 'theme-light' ? 'theme-dark' : 'theme-light');
+  };
+
+  const handleLogout = () => {
+    signOut(auth);
+    setIsAuthenticated(false);
   };
 
   return (
@@ -23,7 +33,11 @@ export const Header = () => {
         </p>
       </button>
 
-      <button className={styles.logout}>Logout</button>
+      {isAuthenticated && (
+        <button className={styles.logout} onClick={handleLogout}>
+          Logout
+        </button>
+      )}
     </section>
   );
 };

@@ -24,7 +24,7 @@ export {
 };
 
 // pages
-import Login from './pages/Login/Login';
-import { Todo } from './pages/Todo/Todo';
+import Login from './pages/login/Login';
+import Todo from './pages/todo/Todo';
 
 export { Login, Todo };
