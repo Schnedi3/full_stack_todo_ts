@@ -1,19 +1,18 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   addTask,
   completeTask,
   deleteTask,
   getTasks,
   updateTask,
-} from "../controllers/taskController";
-import { validateToken } from "../middleware/validateToken";
+} from '../controllers/taskController';
 
 const router = Router();
 
-router.post("/", validateToken, addTask);
-router.put("/complete/:id", validateToken, completeTask);
-router.delete("/:id", validateToken, deleteTask);
-router.get("/", validateToken, getTasks);
-router.put("/update/:id", validateToken, updateTask);
+router.get('/', getTasks);
+router.post('/', addTask);
+router.put('/complete/:id', completeTask);
+router.delete('/:id', deleteTask);
+router.put('/update/:id', updateTask);
 
 export default router;
