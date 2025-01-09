@@ -22,9 +22,3 @@ export {
   iconTheme,
   iconTrash,
 };
-
-// pages
-import Login from './pages/login/Login';
-import Todo from './pages/todo/Todo';
-
-export { Login, Todo };
