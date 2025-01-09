@@ -2,10 +2,10 @@ import { signOut } from 'firebase/auth';
 
 import { useTheme } from '../../hooks/useTheme';
 import { iconTheme } from '../../Routes';
-import styles from './header.module.css';
-import './themes.css';
 import { auth } from '../../firebase/firebase';
 import { useAuthStore } from '../../store/authStore';
+import styles from './header.module.css';
+import './themes.css';
 
 export const Header = () => {
   const { theme, setTheme } = useTheme();
